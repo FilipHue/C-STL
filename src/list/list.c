@@ -216,6 +216,9 @@ void dll_remove(dll_list_t *list, size_t index)
 	if (list->free_fn != NULL) {
 		list->free_fn(to_delete->data);
 	}
+	if (to_delete->data != NULL) {
+		free(to_delete->data);
+	}
 	free(to_delete);
 
 	list->size--;

@@ -5,19 +5,9 @@ typedef struct Point {
     int y;
 } Point;
 
-void int_free(void *data)
-{
-    free(data);
-}
-
 void int_print(void *data)
 {
     printf("%d ", *(int*)data);
-}
-
-void string_free(void *data)
-{
-    free(data);
 }
 
 void string_print(void *data)
@@ -25,24 +15,12 @@ void string_print(void *data)
     printf("%s ", (char*)data);
 }
 
-void double_free(void *data) {
-    free(data);
-}
-
 void double_print(void *data) {
     printf("%.2f ", *(double*)data);
 }
 
-void char_free(void *data) {
-    free(data);
-}
-
 void char_print(void *data) {
     printf("%c ", *(char*)data);
-}
-
-void point_free(void *data) {
-    free(data);
 }
 
 void point_print(void *data) {
@@ -71,7 +49,7 @@ void test_ints()
     // Initialize list
     printf("Initializing list...\n");
 
-    list = dll_create(sizeof(int), int_free, int_print);
+    list = dll_create(sizeof(int), NULL, int_print);
     assert(list != NULL);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
 
@@ -131,7 +109,7 @@ void test_ints()
 
     // Destroy
     printf("Destroying...\n");
-    dll_destroy(list);
+    dll_destroy(&list);
 
     printf("All tests passed!\n\n");
 }
@@ -146,7 +124,7 @@ void test_strings()
     // Initialize list
     printf("Initializing list...\n");
 
-    list = dll_create(sizeof(char*), string_free, string_print);
+    list = dll_create(sizeof(char*), NULL, string_print);
     assert(list != NULL);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
 
@@ -206,7 +184,7 @@ void test_strings()
 
     // Destroy
     printf("Destroying...\n\n");
-    dll_destroy(list);
+    dll_destroy(&list);
 }
 
 void test_containers()
