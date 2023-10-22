@@ -329,7 +329,7 @@ void dll_unique(dll_list_t *list) {
     list->error = ERROR_NONE;
 }
 
-void dll_unique_f(dll_list_t *list, compare_function_t compare_fn)
+void dll_unique_f(dll_list_t *list, unique_function_t compare_fn)
 {
 	if (list == NULL) {
 		return;
@@ -479,6 +479,34 @@ size_t dll_find_f(dll_list_t *list, void *data, find_function_t find_fn)
 	}
 
 	return SIZE_MAX;
+}
+
+void dll_sort(dll_list_t *list, compare_function_t compare_fn, sort_order_t order)
+{
+	if (list == NULL || list->size <= 1) {
+        return;
+    }
+
+    dll_node_t **array = SAFE_CALLOC(list->size, sizeof(dll_node_t*));
+
+    dll_node_t *current = list->head;
+    for (size_t i = 0; i < list->size; i++) {
+        array[i] = current;
+        current = current->next;
+    }
+
+    qsort(array, list->size, sizeof(dll_node_t*), (int (*)(const void*, const void*)) compare_fn);
+
+    for (size_t i = 0; i < list->size - 1; i++) {
+        array[i]->next = array[i + 1];
+        array[i + 1]->prev = array[i];
+    }
+    list->head = array[0];
+    list->tail = array[list->size - 1];
+    list->head->prev = NULL;
+    list->tail->next = NULL;
+
+    free(array);
 }
 
 size_t dll_size(dll_list_t *list)

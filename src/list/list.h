@@ -53,12 +53,14 @@ void dll_insert(dll_list_t *list, size_t index, void *data);
 void dll_remove(dll_list_t *list, size_t index);
 void dll_remove_if(dll_list_t *list, predicate_function_t predicate);
 void dll_unique(dll_list_t *list);
-void dll_unique_f(dll_list_t *list, compare_function_t compare_fn);
+void dll_unique_f(dll_list_t *list, unique_function_t compare_fn);
 void dll_clear(dll_list_t *list);
 
 void* dll_get(dll_list_t *list, size_t index);
 size_t dll_find(dll_list_t *list, void *data);
 size_t dll_find_f(dll_list_t *list, void *data, find_function_t find_fn);
+
+void dll_sort(dll_list_t *list, compare_function_t compare_fn, sort_order_t order);
 
 size_t dll_size(dll_list_t *list);
 bool dll_empty(dll_list_t *list);

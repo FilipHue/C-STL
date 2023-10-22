@@ -24,7 +24,7 @@ enum sort_order {
 typedef void (*free_function_t)(void *data);
 typedef void (*print_function_t)(const void *data);
 
-typedef bool (*compare_function_t)(const void *data1, const void *data2);
+typedef int (*compare_function_t)(const void *data1, const void *data2);
 typedef bool (*predicate_function_t)(const void *data);
 typedef bool (*find_function_t)(const void *data1, const void *data2);
 typedef bool (*unique_function_t)(const void *data1, const void *data2);

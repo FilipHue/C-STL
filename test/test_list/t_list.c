@@ -101,6 +101,52 @@ bool unique_list_int(const void *data1, const void *data2) {
     return true;
 }
 
+int compare_ints(const void *data1, const void *data2) {
+    dll_node_t *node1 = *((dll_node_t**) data1);
+    dll_node_t *node2 = *((dll_node_t**) data2);
+
+    if (*(int*)node1->data < *(int*)node2->data) {
+        return -1;
+    } else if (*(int*)node1->data > *(int*)node2->data) {
+        return 1;
+    } else {
+        return 0;
+    }
+
+    return 0;
+}
+
+int compare_strings(const void *data1, const void *data2) {
+    dll_node_t *node1 = *((dll_node_t**) data1);
+    dll_node_t *node2 = *((dll_node_t**) data2);
+
+    // return strcmp((char*)node1->data, (char*)node2->data);
+
+    if (strlen((char*)node1->data) < strlen((char*)node2->data)) {
+        return -1;
+    } else if (strlen((char*)node1->data) > strlen((char*)node2->data)) {
+        return 1;
+    } else {
+        return strcmp((char*)node1->data, (char*)node2->data);
+    }
+}
+
+int compare_lists(const void *data1, const void *data2) {
+    dll_node_t *node1 = *((dll_node_t**) data1);
+    dll_node_t *node2 = *((dll_node_t**) data2);
+
+    dll_list_t *list1 = *(dll_list_t**) node1->data;
+    dll_list_t *list2 = *(dll_list_t**) node2->data;
+
+    if (list1->size < list2->size) {
+        return -1;
+    } else if (list1->size > list2->size) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 void test_ints()
 {
     printf("Testing ints...\n\t");
@@ -200,6 +246,13 @@ void test_ints()
     index = dll_find(list, &values[5]);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
     assert(index == 2);
+
+    // Sort
+    printf("Sorting...\n\t\t");
+    dll_sort(list, compare_ints, SORT_ASCENDING);
+
+    dll_print(list);
+    printf("\n\t");
 
     // Clear
     printf("Clearing...\n\t\t");
@@ -317,6 +370,13 @@ void test_strings()
     index = dll_find_f(list, values[5], find_string);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
     assert(index == 5);
+
+    // Sort
+    printf("Sorting...\n\t\t");
+    dll_sort(list, compare_strings, SORT_ASCENDING);
+
+    dll_print(list);
+    printf("\n\t");
 
     // Clear
     printf("Clearing...\n\t\t");
@@ -438,6 +498,12 @@ void test_containers()
     index = dll_find_f(main_list, &point_list, find_list_point);
     assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
     assert(index == 2);
+
+    printf("Sorting...\n\t\t");
+    dll_sort(main_list, compare_lists, SORT_ASCENDING);
+
+    dll_print(main_list);
+    printf("\n\t\t");
 
     printf("Destroying main list...\n");
     dll_destroy(&main_list);
