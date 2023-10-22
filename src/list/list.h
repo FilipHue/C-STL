@@ -43,6 +43,7 @@ void dll_prepend(dll_list_t *list, void *data);
 void dll_insert(dll_list_t *list, size_t index, void *data);
 
 void dll_remove(dll_list_t *list, size_t index);
+void dll_remove_if(dll_list_t *list, predicate_function_t predicate);
 void dll_clear(dll_list_t *list);
 
 size_t dll_size(dll_list_t *list);

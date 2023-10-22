@@ -226,6 +226,52 @@ void dll_remove(dll_list_t *list, size_t index)
 	list->error = ERROR_NONE;
 }
 
+void dll_remove_if(dll_list_t *list, predicate_function_t predicate)
+{
+	if (list == NULL) {
+		list->error = ERROR_NULL;
+		return;
+	}
+
+	dll_node_t *current_node;
+	dll_node_t *next_node;
+
+	current_node = list->head;
+
+	while (current_node != NULL) {
+		next_node = current_node->next;
+
+		if (predicate(current_node->data)) {
+			if (current_node == list->head) {
+				list->head = list->head->next;
+				if (list->head != NULL) {
+					list->head->prev = NULL;
+				}
+			} else if (current_node == list->tail) {
+				list->tail = list->tail->prev;
+				list->tail->next = NULL;
+			} else {
+				current_node->prev->next = current_node->next;
+				current_node->next->prev = current_node->prev;
+			}
+
+			if (list->free_fn != NULL) {
+				list->free_fn(current_node->data);
+			}
+			if (current_node->data != NULL) {
+				free(current_node->data);
+			}
+			free(current_node);
+
+			list->size--;
+		}
+
+		current_node = next_node;
+	}
+
+	list->error = ERROR_NONE;
+}
+
 void dll_clear(dll_list_t *list)
 {
 	if (list == NULL) {
