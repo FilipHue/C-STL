@@ -281,6 +281,103 @@ void dll_remove_if(dll_list_t *list, predicate_function_t predicate)
 	list->error = ERROR_NONE;
 }
 
+void dll_unique(dll_list_t *list) {
+    if (list == NULL) {
+        return;
+    }
+
+    dll_node_t *current_node;
+    dll_node_t *next_node;
+    dll_node_t *to_remove;
+
+    current_node = list->head;
+
+    while (current_node != NULL) {
+        next_node = current_node->next;
+
+        while (next_node != NULL) {
+            to_remove = next_node;
+
+            if (memcmp(current_node->data, to_remove->data, list->data_size) == 0) {
+                if (to_remove == list->tail) {
+                    list->tail = list->tail->prev;
+                    list->tail->next = NULL;
+                } else {
+                    to_remove->prev->next = to_remove->next;
+                    to_remove->next->prev = to_remove->prev;
+                }
+
+                next_node = to_remove->next;
+
+                if (list->free_fn != NULL) {
+                    list->free_fn(to_remove->data);
+                }
+                if (to_remove->data != NULL) {
+                    free(to_remove->data);
+                }
+                free(to_remove);
+
+                list->size--;
+            } else {
+                next_node = next_node->next;
+            }
+        }
+
+        current_node = current_node->next;
+    }
+
+    list->error = ERROR_NONE;
+}
+
+void dll_unique_f(dll_list_t *list, compare_function_t compare_fn)
+{
+	if (list == NULL) {
+		return;
+	}
+
+	dll_node_t *current_node;
+	dll_node_t *next_node;
+	dll_node_t *to_remove;
+
+	current_node = list->head;
+
+	while (current_node != NULL) {
+		next_node = current_node->next;
+
+		while (next_node != NULL) {
+			to_remove = next_node;
+
+			if (compare_fn(current_node->data, to_remove->data)) {
+				if (to_remove == list->tail) {
+					list->tail = list->tail->prev;
+					list->tail->next = NULL;
+				} else {
+					to_remove->prev->next = to_remove->next;
+					to_remove->next->prev = to_remove->prev;
+				}
+
+				next_node = to_remove->next;
+
+				if (list->free_fn != NULL) {
+					list->free_fn(to_remove->data);
+				}
+				if (to_remove->data != NULL) {
+					free(to_remove->data);
+				}
+				free(to_remove);
+
+				list->size--;
+			} else {
+				next_node = next_node->next;
+			}
+		}
+
+		current_node = current_node->next;
+	}
+
+	list->error = ERROR_NONE;
+}
+
 void dll_clear(dll_list_t *list)
 {
 	if (list == NULL) {

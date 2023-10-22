@@ -1,6 +1,6 @@
 # Variables
 CC = gcc
-CFLAGS = -Wall -Isrc/common/error -Isrc/common/generic -Isrc/list -Itest/test_list
+CFLAGS = -Wall -Wno-unused-function -Isrc/common/error -Isrc/common/generic -Isrc/list -Itest/test_list
 OBJDIR = obj
 
 # Containers

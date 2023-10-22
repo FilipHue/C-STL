@@ -20,6 +20,7 @@ typedef void (*print_function_t)(void *data);
 typedef bool (*compare_function_t)(void *data1, void *data2);
 typedef bool (*predicate_function_t)(void *data);
 typedef bool (*find_function_t)(void *data1, void *data2);
+typedef bool (*unique_function_t)(void *data1, void *data2);
 
 container_error_t get_error(void *container, container_type_t type);
 

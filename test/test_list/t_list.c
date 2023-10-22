@@ -39,40 +39,66 @@ void list_print(void *data) {
     }
 }
 
-predicate_function_t is_even(void *data) {
-    return *(int*)data % 2 == 0;
+bool is_even(void *data) {
+    return (*(int*)data % 2 == 0);
 }
 
-predicate_function_t is_string(void *data) {
+bool is_string(void *data) {
     return strcmp((char*)data, "one") == 0;
 }
 
-predicate_function_t is_list(void *data) {
+bool is_list(void *data) {
     return *(dll_list_t**)data != NULL;
 }
 
-predicate_function_t is_int(void *data) {
+bool is_int(void *data) {
     return (*(dll_list_t**)data)->print_fn == int_print;
 }
 
-find_function_t find_int(void *data, void *value) {
+bool find_int(void *data, void *value) {
     return *(int*)data == *(int*)value;
 }
 
-find_function_t find_string(void *data, void *value) {
+bool find_string(void *data, void *value) {
     return strcmp((char*)data, (char*)value) == 0;
 }
 
-find_function_t find_list_int(void *data, void *value) {
+bool find_list_int(void *data, void *value) {
     return (*(dll_list_t**)data)->print_fn == int_print;
 }
 
-find_function_t find_list_double(void *data, void *value) {
+bool find_list_double(void *data, void *value) {
     return (*(dll_list_t**)data)->print_fn == double_print;
 }
 
-find_function_t find_list_point(void *data, void *value) {
+bool find_list_point(void *data, void *value) {
     return (*(dll_list_t**)data)->print_fn == point_print;
+}
+
+bool unique_list_int(void *data1, void *data2) {
+    dll_list_t *list1 = *(dll_list_t**) data1;
+    dll_list_t *list2 = *(dll_list_t**) data2;
+
+    if (list1->size != list2->size) {
+        return false;
+    }
+
+    dll_node_t *node1 = list1->head;
+    dll_node_t *node2 = list2->head;
+
+    while (node1 != NULL && node2 != NULL) {
+        int *int1 = (int*) node1->data;
+        int *int2 = (int*) node2->data;
+
+        if (*int1 != *int2) {
+            return false;
+        }
+
+        node1 = node1->next;
+        node2 = node2->next;
+    }
+
+    return true;
 }
 
 void test_ints()
@@ -141,6 +167,14 @@ void test_ints()
     dll_print(list);
     printf("\n\t");
 
+    // Unique
+    printf("Unique...\n\t\t");
+    dll_unique(list);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+
+    dll_print(list);
+    printf("\n\t");
+
     // Get
     printf("Getting...\n\t");
     int *value = dll_get(list, 0);
@@ -151,9 +185,9 @@ void test_ints()
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
     assert(*value == *((int*)dll_back(list)));
 
-    value = dll_get(list, 5);
+    value = dll_get(list, 3);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
-    assert(*value == 1);
+    assert(*value == 3);
 
     // Find
     printf("Finding...\n\t");
@@ -255,15 +289,22 @@ void test_strings()
     printf("Getting...\n\t");
     char *value = dll_get(list, 0);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
-    assert(strcmp(value, ((char**)dll_front(list))) == 0);
+    assert(strcmp(value, ((char*)dll_front(list))) == 0);
 
     value = dll_get(list, dll_size(list) - 1);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
-    assert(strcmp(value, ((char**)dll_back(list))) == 0);
+    assert(strcmp(value, ((char*)dll_back(list))) == 0);
 
     value = dll_get(list, 5);
     assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
     assert(strcmp(value, "five") == 0);
+
+    // Unique
+    printf("Unique...\n\t\t");
+    dll_unique(list);
+
+    dll_print(list);
+    printf("\n\t");
 
     // Find
     printf("Finding...\n\t");
@@ -305,9 +346,13 @@ void test_containers()
 
     printf("Creating int list...\n\t\t\t");
     dll_list_t *int_list = dll_create(sizeof(int), NULL, int_print);
+    dll_list_t *int_list2 = dll_create(sizeof(int), NULL, int_print);
+    dll_list_t *int_list3 = dll_create(sizeof(int), NULL, int_print);
     int int_values[6] = {0, 1, 2, 3, 4, 5};
     for (int i = 0; i < 6; i++) {
         dll_append(int_list, &int_values[i]);
+        dll_append(int_list2, &int_values[i]);
+        dll_append(int_list3, &int_values[i]);
         assert(get_error(int_list, CONTAINER_LIST) == ERROR_NONE);
     }
     dll_print(int_list);
@@ -359,10 +404,29 @@ void test_containers()
     dll_print(main_list);
     printf("\n\t\t");
 
+    printf("Unique...\n\t\t\t");
+    dll_append(main_list, &int_list2);
+    dll_append(main_list, &int_list3);
+
+    printf("Before: ");
+    dll_print(main_list);
+    printf("\n\t\t\t");
+
+    dll_unique_f(main_list, unique_list_int);
+
+    printf("After:  ");
+    dll_print(main_list);
+    printf("\n\t\t");
+
     printf("Finding int list...\n\t\t");
     size_t index = dll_find(main_list, &int_list);
     assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
     assert(index == SIZE_MAX);
+
+    printf("Finding int list2...\n\t\t");
+    index = dll_find(main_list, &int_list2);
+    assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == dll_size(main_list) - 1);
 
     printf("Finding double list...\n\t\t");
     index = dll_find_f(main_list, &double_list, find_list_double);

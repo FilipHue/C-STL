@@ -52,6 +52,8 @@ void dll_insert(dll_list_t *list, size_t index, void *data);
 
 void dll_remove(dll_list_t *list, size_t index);
 void dll_remove_if(dll_list_t *list, predicate_function_t predicate);
+void dll_unique(dll_list_t *list);
+void dll_unique_f(dll_list_t *list, compare_function_t compare_fn);
 void dll_clear(dll_list_t *list);
 
 void* dll_get(dll_list_t *list, size_t index);
