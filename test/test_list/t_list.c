@@ -55,6 +55,26 @@ predicate_function_t is_int(void *data) {
     return (*(dll_list_t**)data)->print_fn == int_print;
 }
 
+find_function_t find_int(void *data, void *value) {
+    return *(int*)data == *(int*)value;
+}
+
+find_function_t find_string(void *data, void *value) {
+    return strcmp((char*)data, (char*)value) == 0;
+}
+
+find_function_t find_list_int(void *data, void *value) {
+    return (*(dll_list_t**)data)->print_fn == int_print;
+}
+
+find_function_t find_list_double(void *data, void *value) {
+    return (*(dll_list_t**)data)->print_fn == double_print;
+}
+
+find_function_t find_list_point(void *data, void *value) {
+    return (*(dll_list_t**)data)->print_fn == point_print;
+}
+
 void test_ints()
 {
     printf("Testing ints...\n\t");
@@ -121,6 +141,32 @@ void test_ints()
     dll_print(list);
     printf("\n\t");
 
+    // Get
+    printf("Getting...\n\t");
+    int *value = dll_get(list, 0);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(*value == *((int*)dll_front(list)));
+
+    value = dll_get(list, dll_size(list) - 1);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(*value == *((int*)dll_back(list)));
+
+    value = dll_get(list, 5);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(*value == 1);
+
+    // Find
+    printf("Finding...\n\t");
+    size_t index;
+    
+    index = dll_find(list, dll_front(list));
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 0);
+
+    index = dll_find(list, &values[5]);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 2);
+
     // Clear
     printf("Clearing...\n\t\t");
     dll_clear(list);
@@ -134,6 +180,7 @@ void test_ints()
     // Destroy
     printf("Destroying...\n");
     dll_destroy(&list);
+    assert(list == NULL);
 
     printf("All tests passed!\n\n");
 }
@@ -203,6 +250,32 @@ void test_strings()
 
     dll_print(list);
     printf("\n\t");
+
+    // Get
+    printf("Getting...\n\t");
+    char *value = dll_get(list, 0);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(strcmp(value, ((char**)dll_front(list))) == 0);
+
+    value = dll_get(list, dll_size(list) - 1);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(strcmp(value, ((char**)dll_back(list))) == 0);
+
+    value = dll_get(list, 5);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(strcmp(value, "five") == 0);
+
+    // Find
+    printf("Finding...\n\t");
+    size_t index;
+
+    index = dll_find_f(list, dll_front(list), find_string);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 0);
+
+    index = dll_find_f(list, values[5], find_string);
+    assert(get_error(list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 5);
 
     // Clear
     printf("Clearing...\n\t\t");
@@ -285,6 +358,22 @@ void test_containers()
 
     dll_print(main_list);
     printf("\n\t\t");
+
+    printf("Finding int list...\n\t\t");
+    size_t index = dll_find(main_list, &int_list);
+    assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == SIZE_MAX);
+
+    printf("Finding double list...\n\t\t");
+    index = dll_find_f(main_list, &double_list, find_list_double);
+    assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 0);
+
+    printf("Finding point list...\n\t\t");
+
+    index = dll_find_f(main_list, &point_list, find_list_point);
+    assert(get_error(main_list, CONTAINER_LIST) == ERROR_NONE);
+    assert(index == 2);
 
     printf("Destroying main list...\n");
     dll_destroy(&main_list);

@@ -10,6 +10,13 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <assert.h>
+#include <stdarg.h>
+#include <stdint.h>
+
+#include <sys/errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 typedef struct dll_node dll_node_t;
 typedef struct dll_list dll_list_t;
@@ -37,6 +44,7 @@ dll_list_t *dll_create(size_t data_size, free_function_t free_fn, print_function
 void dll_destroy(dll_list_t **list);
 
 void* dll_front(dll_list_t *list);
+void* dll_back(dll_list_t *list);
 
 void dll_append(dll_list_t *list, void *data);
 void dll_prepend(dll_list_t *list, void *data);
@@ -45,6 +53,10 @@ void dll_insert(dll_list_t *list, size_t index, void *data);
 void dll_remove(dll_list_t *list, size_t index);
 void dll_remove_if(dll_list_t *list, predicate_function_t predicate);
 void dll_clear(dll_list_t *list);
+
+void* dll_get(dll_list_t *list, size_t index);
+size_t dll_find(dll_list_t *list, void *data);
+size_t dll_find_f(dll_list_t *list, void *data, find_function_t find_fn);
 
 size_t dll_size(dll_list_t *list);
 bool dll_empty(dll_list_t *list);
