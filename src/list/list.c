@@ -1,3 +1,14 @@
+/**
+ * @file list.c
+ * @author Secareanu Filip
+ * @brief Doubly linked list implementation.
+ * @version 0.1
+ * @date 2023-10-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "list.h"
 
 dll_list_t *dll_create(size_t data_size, free_function_t free_fn, print_function_t print_fn)

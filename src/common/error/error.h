@@ -1,3 +1,14 @@
+/**
+ * @file error.h
+ * @author Secareanu Filip
+ * @brief   This module provides an enum for error codes.
+ * @version 0.1
+ * @date 2023-10-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef ERROR_H
 #define ERROR_H
 

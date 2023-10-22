@@ -1,3 +1,14 @@
+/**
+ * @file container_utils.c
+ * @author Secareanu Filip
+ * @brief   This module provides utility methods to manipulate and query containers.
+ * @version 0.1
+ * @date 2023-10-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "container_utils.h"
 
 #include "../../list/list.h"

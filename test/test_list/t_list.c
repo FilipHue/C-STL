@@ -1,3 +1,14 @@
+/**
+ * @file t_list.c
+ * @author Secareanu Filip
+ * @brief   This module provides the implementation of the methods from t_list.h.
+ * @version 0.1
+ * @date 2023-10-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "t_list.h"
 
 typedef struct Point {

@@ -1,3 +1,7 @@
+# Created by: Secareanu Filip
+# Project: Generic data structures
+# Date: 2023-22-10
+
 # Variables
 CC = gcc
 CFLAGS = -Wall -Wno-unused-function -Isrc/common/error -Isrc/common/generic -Isrc/list -Itest/test_list
