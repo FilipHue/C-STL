@@ -61,6 +61,7 @@ size_t dll_find(dll_list_t *list, void *data);
 size_t dll_find_f(dll_list_t *list, void *data, find_function_t find_fn);
 
 void dll_sort(dll_list_t *list, compare_function_t compare_fn, sort_order_t order);
+void dll_reverse(dll_list_t *list);
 
 size_t dll_size(dll_list_t *list);
 bool dll_empty(dll_list_t *list);

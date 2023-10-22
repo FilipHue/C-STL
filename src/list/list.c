@@ -509,6 +509,31 @@ void dll_sort(dll_list_t *list, compare_function_t compare_fn, sort_order_t orde
     free(array);
 }
 
+void dll_reverse(dll_list_t *list)
+{
+	if (list == NULL || list->size <= 1) {
+		return;
+	}
+
+	dll_node_t *current_node;
+	dll_node_t *next_node;
+
+	current_node = list->head;
+
+	while (current_node != NULL) {
+		next_node = current_node->next;
+
+		current_node->next = current_node->prev;
+		current_node->prev = next_node;
+
+		current_node = next_node;
+	}
+
+	current_node = list->head;
+	list->head = list->tail;
+	list->tail = current_node;
+}
+
 size_t dll_size(dll_list_t *list)
 {
 	if (list == NULL) {

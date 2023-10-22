@@ -254,6 +254,13 @@ void test_ints()
     dll_print(list);
     printf("\n\t");
 
+    // Reverse
+    printf("Reversing...\n\t\t");
+    dll_reverse(list);
+
+    dll_print(list);
+    printf("\n\t");
+
     // Clear
     printf("Clearing...\n\t\t");
     dll_clear(list);
@@ -374,6 +381,13 @@ void test_strings()
     // Sort
     printf("Sorting...\n\t\t");
     dll_sort(list, compare_strings, SORT_ASCENDING);
+
+    dll_print(list);
+    printf("\n\t");
+
+    // Reverse
+    printf("Reversing...\n\t\t");
+    dll_reverse(list);
 
     dll_print(list);
     printf("\n\t");
@@ -501,6 +515,12 @@ void test_containers()
 
     printf("Sorting...\n\t\t");
     dll_sort(main_list, compare_lists, SORT_ASCENDING);
+
+    dll_print(main_list);
+    printf("\n\t\t");
+
+    printf("Reversing...\n\t\t");
+    dll_reverse(main_list);
 
     dll_print(main_list);
     printf("\n\t\t");
