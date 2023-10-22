@@ -10,12 +10,11 @@
  */
 
 #include "src/list/list.h"
-#include "test/test_list/t_list.h"
 
 int main() {
-    test_ints();
-    test_strings();
-    test_containers();
+    dll_list_t *list = dll_create(sizeof(int), NULL, NULL);
+
+    dll_destroy(&list);
 
     return 0;
 }
