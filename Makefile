@@ -12,6 +12,7 @@ LIST = list.o
 
 # All object files
 OBJS = $(OBJDIR)/main.o \
+       $(OBJDIR)/t_list.o \
        $(OBJDIR)/container_utils.o \
        $(OBJDIR)/memory_utils.o \
        $(OBJDIR)/$(LIST)
