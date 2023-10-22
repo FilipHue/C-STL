@@ -5,25 +5,25 @@ typedef struct Point {
     int y;
 } Point;
 
-void int_print(void *data)
+void int_print(const void *data)
 {
     printf("%d ", *(int*)data);
 }
 
-void string_print(void *data)
+void string_print(const void *data)
 {
     printf("%s ", (char*)data);
 }
 
-void double_print(void *data) {
+void double_print(const void *data) {
     printf("%.2f ", *(double*)data);
 }
 
-void char_print(void *data) {
+void char_print(const void *data) {
     printf("%c ", *(char*)data);
 }
 
-void point_print(void *data) {
+void point_print(const void *data) {
     Point *point = (Point*)data;
     printf("(%d, %d) ", point->x, point->y);
 }
@@ -32,50 +32,50 @@ void list_free(void *data) {
     dll_destroy((dll_list_t**)data);
 }
 
-void list_print(void *data) {
+void list_print(const void *data) {
     dll_list_t *nested_list = *(dll_list_t**)data;
     if (nested_list) {
         dll_print(nested_list);
     }
 }
 
-bool is_even(void *data) {
+bool is_even(const void *data) {
     return (*(int*)data % 2 == 0);
 }
 
-bool is_string(void *data) {
+bool is_string(const void *data) {
     return strcmp((char*)data, "one") == 0;
 }
 
-bool is_list(void *data) {
+bool is_list(const void *data) {
     return *(dll_list_t**)data != NULL;
 }
 
-bool is_int(void *data) {
+bool is_int(const void *data) {
     return (*(dll_list_t**)data)->print_fn == int_print;
 }
 
-bool find_int(void *data, void *value) {
+bool find_int(const void *data, const void *value) {
     return *(int*)data == *(int*)value;
 }
 
-bool find_string(void *data, void *value) {
+bool find_string(const void *data, const void *value) {
     return strcmp((char*)data, (char*)value) == 0;
 }
 
-bool find_list_int(void *data, void *value) {
+bool find_list_int(const void *data, const void *value) {
     return (*(dll_list_t**)data)->print_fn == int_print;
 }
 
-bool find_list_double(void *data, void *value) {
+bool find_list_double(const void *data, const void *value) {
     return (*(dll_list_t**)data)->print_fn == double_print;
 }
 
-bool find_list_point(void *data, void *value) {
+bool find_list_point(const void *data, const void *value) {
     return (*(dll_list_t**)data)->print_fn == point_print;
 }
 
-bool unique_list_int(void *data1, void *data2) {
+bool unique_list_int(const void *data1, const void *data2) {
     dll_list_t *list1 = *(dll_list_t**) data1;
     dll_list_t *list2 = *(dll_list_t**) data2;
 
