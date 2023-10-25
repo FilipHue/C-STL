@@ -13,6 +13,7 @@
 
 #include "../../list/list.h"
 #include "../../stack/stack.h"
+#include "../../queue/queue.h"
 
 container_error_t get_error(void *container, container_type_t type)
 {
@@ -26,9 +27,9 @@ container_error_t get_error(void *container, container_type_t type)
         case CONTAINER_STACK:
             error = ((stack_t *)container)->error;
             break;
-        // case CONTAINER_QUEUE:
-        //     error = ((queue_t *)container)->error;
-        //     break;
+        case CONTAINER_QUEUE:
+            error = ((queue_t *)container)->error;
+            break;
         // case CONTAINER_HASH_TABLE:
         //     error = ((hash_table_t *)container)->error;
         //     break;
