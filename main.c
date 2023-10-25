@@ -10,17 +10,10 @@
  */
 
 #include "src/list/list.h"
-#include "test/test_list/t_list.h"
-#include "test/test_stack/t_stack.h"
+#include "src/stack/stack.h"
 
 int main() {
-    // test_ints();
-    // test_strings();
-    // test_containers();
-
-    // stest_ints();
-    // stest_strings();
-    // stest_containers();
+    printf("Welcome to the testing program!\n");
 
     return 0;
 }
