@@ -58,7 +58,8 @@ Like many other programming languages ([C++](https://cplusplus.com/doc/tutorial/
 However, sometimes you need to work with the
 variable itself from inside the function, keeping the modifications. In that case, you'd need to send the address of the variable to the function — and that’s where pointers come into play. With pointers, you can send over an address, work directly with the variable located at that address, and see the changes reflected outside the function as well.
 
-So, to summarize: 
+So, to summarize:
+
 **A pointer is a specialized type in C, capable of storing the memory address of other variables or memory locations.**
 Furthermore, the size of a pointer is dependent on the system architecture, not the size of the data that is pointing to. For example, on a 64-bit system, a pointer would be 8 bytes in size, reflecting the 64-bit nature of the addresses on such a system.
 
