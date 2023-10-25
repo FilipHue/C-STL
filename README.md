@@ -40,4 +40,79 @@ So there you have it! I've tried to keep things clear and easy to navigate, just
 
 ### 🚧 Heads Up! This project is still very much a work in progress. Not all data structures are complete, and the documentation is still under construction. But don't worry! I'm actively working on it, and there will be regular updates. So, do check back often.
 
-Happy coding! 🚀
+## Summary of Topics
+Now, with this out of the way, you can choose what topic you want to learn about.
+
+ - [Understanding Pointers in C](#understanding-pointers-in-c)
+	 - [Arrays](#arrays)
+	 - [Single Linked List](#single-linked-list)
+ - Data Structures Explained:
+	 - [Double Linked List (DLL)](#double-linked-list-dll) 
+	 - [Stack](#stack) 
+	 - [Queue](#queue)
+
+## Understanding pointers in C
+
+Like many other programming languages ([C++](https://cplusplus.com/doc/tutorial/), [Java](https://dev.java/learn/) (only for primitive types), [Python](https://docs.python.org/3/), [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [Fortran](https://fortran-lang.org/learn/) etc.), **C** operates on a **pass-by-value** basis. What this means is when you pass a variable to a function, C actually passes a copy of that variable’s value to the function, and any changes made to the parameter inside the function have no effect on the original argument outside of the function.
+
+However, sometimes you need to work with the
+variable itself from inside the function, keeping the modifications. In that case, you'd need to send the address of the variable to the function — and that’s where pointers come into play. With pointers, you can send over an address, work directly with the variable located at that address, and see the changes reflected outside the function as well.
+
+So, to summarize: 
+**A pointer is a specialized type in C, capable of storing the memory address of other variables or memory locations.**
+Furthermore, the size of a pointer is dependent on the system architecture, not the size of the data that is pointing to. For example, on a 64-bit system, a pointer would be 8 bytes in size, reflecting the 64-bit nature of the addresses on such a system.
+
+There are various types of pointers, each with his unique purpose. However, there's one type that will be of most use to us for this project: the **void** pointer. This kind of pointer is type-agnostic, meaning it does not associate itself with any specific data type. This versatile nature allows it to point to any data type, and it can be typecasted to suit our needs. Due to this flexibility, **void** pointers are often referred to as generic pointers.
+
+### Arrays
+
+An array in C is essentially **a contiguous block of memory** allocated to hold a collection of elements, all of the same type. This contiguous nature ensures efficient access to the elements via indexing, where the memory address of each element can be easily calculated based on its position.
+
+#### Declaring Arrays: Static vs. Dynamic
+
+Arrays can be declared in two main ways: **statically** or **dynamically**.
+
+-   **Static Arrays**: The size of a static array is determined at compile-time, making the array’s size constant throughout the program's execution. Here's how you can declare a static array:
+
+	```C
+	int staticArray[5]; // Declares an integer array of size 5.
+	```
+
+-   **Dynamic Arrays**: Unlike static arrays, dynamic arrays allow for flexibility in size. They are created at runtime using pointers and memory allocation functions like `malloc`, `calloc`, or `realloc`. Here's an example:
+    
+    ```C
+    int* dynamicArray = (int*)malloc(5 * sizeof(int)); // Allocates memory for an integer array of size 5.
+    ```
+	
+At a closer look, you'll notice that in dealing with arrays, we are inherently working with pointers. The array identifier serves as a pointer, directing us to the initial memory location where the data is stored.
+
+### An interesting case: Matrices in C
+To have a better understanding of arrays, lets look at the matrix.
+
+In C, a matrix can be thought of as an array of arrays, or more specifically, a pointer to an array of pointers.
+
+Let's break that down:
+
+-   **Array of Arrays**: A matrix is a two-dimensional data structure where data is stored in rows and columns. To define a matrix, you essentially create an array where each element is itself an array.
+	```C
+	int matrix[3][3] = {
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9}
+	};
+	```
+    
+-   **Pointer to an Array of Pointers**: A more nuanced way to look at matrices in C is to see them as pointers pointing to other pointers. The first pointer points to a location in memory where there are other pointers, and these second-level pointers point to the actual data in the matrix.
+	```C
+	int** matrix = (int**)malloc(rows * sizeof(int*));
+	for (int i = 0; i < rows; i++) {
+		matrix[i] = (int*)malloc(cols * sizeof(int));
+	}
+	```
+
+## Double Linked List (DLL)
+
+## Stack
+
+## Queue
+
