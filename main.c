@@ -19,7 +19,7 @@ int main() {
     // test_strings();
     // test_containers();
 
-    // stest_ints();
+    stest_ints();
     // stest_strings();
     // stest_containers();
 
