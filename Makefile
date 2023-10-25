@@ -13,8 +13,11 @@ STACK = stack.o
 
 # All object files
 OBJS = $(OBJDIR)/main.o \
+<<<<<<< HEAD
        $(OBJDIR)/t_list.o \
 	   $(OBJDIR)/t_stack.o \
+=======
+>>>>>>> main
        $(OBJDIR)/container_utils.o \
        $(OBJDIR)/memory_utils.o \
        $(OBJDIR)/$(LIST) \
