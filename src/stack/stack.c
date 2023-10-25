@@ -238,8 +238,12 @@ void stack_print(stack_t *stack)
         return;
     }
 
-    for (size_t i = 0; i < stack->size; i++) {
-        void *source = stack->data + (i * stack->data_size);
+    size_t top = stack->top;
+
+    while (top != SIZE_MAX) {
+        void *source = stack->data + (top * stack->data_size);
         stack->print_function(source);
+
+        top--;
     }
 }

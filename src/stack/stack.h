@@ -7,9 +7,29 @@
  * 
  * @copyright Copyright (c) 2023
  * 
- * This header defines the interface for a generic, dynamically resizing stack
- * with customizable behavior through function pointers. It's designed to be both 
- * an educational tool and a practical generic stack implementation in C.
+ * This file defines the structure and function prototypes required to implement
+ * a generic stack data structure. The stack is implemented using a dynamic
+ * array, providing efficient resizing capabilities based on the number of
+ * elements and specified growth and shrink thresholds.
+ *
+ * The stack is designed to be generic, supporting storage of any data type.
+ * Client code is required to provide the size of the data type, and optionally,
+ * custom memory management and printing functions, to ensure proper operation
+ * for various data types.
+ *
+ * Standard stack operations are supported, including push (to add elements to
+ * the top), pop (to remove elements from the top), and peek (to view the top
+ * element without removing it). Additional utilities provided include checking
+ * if the stack is empty, retrieving the current size of the stack, clearing the
+ * stack, resizing the internal array, and converting between stacks and arrays.
+ *
+ * Error handling is integral to the implementation, with the stack keeping track
+ * of the last occurred error using the `container_error_t` type. This allows
+ * for robust error checking and handling by client code.
+ *
+ * This stack implementation is part of a larger container library, which
+ * includes various utilities for generic programming and error management,
+ * ensuring consistency and ease of use across different data structures.
  */
 
 #ifndef STACK_H
