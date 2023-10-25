@@ -61,6 +61,7 @@ variable itself from inside the function, keeping the modifications. In that cas
 So, to summarize:
 
 **A pointer is a specialized type in C, capable of storing the memory address of other variables or memory locations.**
+
 Furthermore, the size of a pointer is dependent on the system architecture, not the size of the data that is pointing to. For example, on a 64-bit system, a pointer would be 8 bytes in size, reflecting the 64-bit nature of the addresses on such a system.
 
 There are various types of pointers, each with his unique purpose. However, there's one type that will be of most use to us for this project: the **void** pointer. This kind of pointer is type-agnostic, meaning it does not associate itself with any specific data type. This versatile nature allows it to point to any data type, and it can be typecasted to suit our needs. Due to this flexibility, **void** pointers are often referred to as generic pointers.
