@@ -24,6 +24,9 @@
  */
 void* safe_calloc(size_t nmemb, size_t size, unsigned int line);
 
+void* safe_realloc(void *ptr, size_t size, unsigned int line);
+
 #define SAFE_CALLOC(nmemb, size) safe_calloc(nmemb, size, __LINE__);
+#define SAFE_REALLOC(ptr, size) safe_realloc(ptr, size, __LINE__);
 
 #endif // MEMORY_UTILS_H

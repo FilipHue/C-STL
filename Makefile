@@ -9,13 +9,16 @@ OBJDIR = obj
 
 # Containers
 LIST = list.o
+STACK = stack.o
 
 # All object files
 OBJS = $(OBJDIR)/main.o \
        $(OBJDIR)/t_list.o \
+	   $(OBJDIR)/t_stack.o \
        $(OBJDIR)/container_utils.o \
        $(OBJDIR)/memory_utils.o \
-       $(OBJDIR)/$(LIST)
+       $(OBJDIR)/$(LIST) \
+	   $(OBJDIR)/$(STACK)
 
 # Binary directory
 BINDIR = bin
@@ -48,8 +51,16 @@ $(OBJDIR)/memory_utils.o: src/common/generic/memory_utils.c
 $(OBJDIR)/t_list.o: test/test_list/t_list.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Test stack
+$(OBJDIR)/t_stack.o: test/test_stack/t_stack.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # List
 $(OBJDIR)/list.o: src/list/list.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Stack
+$(OBJDIR)/stack.o: src/stack/stack.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create the binary directory

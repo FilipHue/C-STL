@@ -19,3 +19,13 @@ void* safe_calloc(size_t nmemb, size_t size, unsigned int line) {
     }
     return ptr;
 }
+
+void *safe_realloc(void *ptr, size_t size, unsigned int line)
+{
+    void *new_ptr = realloc(ptr, size);
+    if (new_ptr == NULL) {
+        fprintf(stderr, "[%s:%u] Out of memory (%ld bytes)\n", __FILE__, line, size);
+        exit(EXIT_FAILURE);
+    }
+    return new_ptr;
+}

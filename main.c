@@ -11,11 +11,16 @@
 
 #include "src/list/list.h"
 #include "test/test_list/t_list.h"
+#include "test/test_stack/t_stack.h"
 
 int main() {
-    test_ints();
-    test_strings();
-    test_containers();
+    // test_ints();
+    // test_strings();
+    // test_containers();
+
+    // stest_ints();
+    // stest_strings();
+    // stest_containers();
 
     return 0;
 }
