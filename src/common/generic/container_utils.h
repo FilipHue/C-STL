@@ -28,6 +28,14 @@ typedef enum container_type {
 } container_type_t;
 
 /** 
+ * @brief Enumeration of supported container flags.
+ */
+typedef enum container_flags {
+    CF_NONE,                        /**< No flags set. */
+    CF_FREE_DATA                    /**< Flag indicating that the container should free the data when destroyed or cleared. */
+} container_flags_t;
+
+/** 
  * @brief Enumeration of supported sort orders.
  */
 typedef enum sort_order {
