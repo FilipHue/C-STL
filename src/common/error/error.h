@@ -14,11 +14,13 @@
 
 typedef enum container_error container_error_t;
 enum container_error {
-    ERROR_NONE,
-    ERROR_NULL,
-    ERROR_MEMEORY_ALLOCATION,
-    ERROR_INVALID_DATA,
-    ERROR_INVALID_INDEX
+    ERROR_NONE,                 // 0
+    ERROR_NULL,                 // 1
+    ERROR_MEMORY_ALLOCATION,    // 2
+    ERROR_INVALID_DATA,         // 3
+    ERROR_INVALID_INDEX,        // 4
+    ERROR_INVALID_FUNCTION,     // 5
+    ERROR_EMPTY                 // 6
 };
 
 #endif // ERROR_H

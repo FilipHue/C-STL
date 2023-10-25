@@ -154,7 +154,7 @@ void dll_insert(dll_list_t *list, size_t index, void *data)
 		return;
 	}
 
-	if (index >= list->size) {
+	if (index >= list->size && index != 0) {
 		list->error = ERROR_INVALID_INDEX;
 		return;
 	}

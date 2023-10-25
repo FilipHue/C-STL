@@ -12,6 +12,7 @@
 #include "src/list/list.h"
 #include "test/test_list/t_list.h"
 #include "test/test_stack/t_stack.h"
+#include "test/test_queue/t_queue.h"
 
 int main() {
     // test_ints();
@@ -21,6 +22,10 @@ int main() {
     // stest_ints();
     // stest_strings();
     // stest_containers();
+
+    // qtest_int();
+    // qtest_string();
+    // qtest_containers();
 
     return 0;
 }

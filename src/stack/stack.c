@@ -228,6 +228,7 @@ void stack_resize(stack_t *stack, size_t new_capacity)
     stack->capacity = new_capacity;
 }
 
+// TODO Fix print function
 void stack_print(stack_t *stack)
 {
     if (stack == NULL) {

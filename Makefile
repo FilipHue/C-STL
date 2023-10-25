@@ -10,15 +10,18 @@ OBJDIR = obj
 # Containers
 LIST = list.o
 STACK = stack.o
+QUEUE = queue.o
 
 # All object files
 OBJS = $(OBJDIR)/main.o \
        $(OBJDIR)/t_list.o \
 	   $(OBJDIR)/t_stack.o \
+	   $(OBJDIR)/t_queue.o \
        $(OBJDIR)/container_utils.o \
        $(OBJDIR)/memory_utils.o \
        $(OBJDIR)/$(LIST) \
-	   $(OBJDIR)/$(STACK)
+	   $(OBJDIR)/$(STACK) \
+	   $(OBJDIR)/$(QUEUE)
 
 # Binary directory
 BINDIR = bin
@@ -55,12 +58,20 @@ $(OBJDIR)/t_list.o: test/test_list/t_list.c
 $(OBJDIR)/t_stack.o: test/test_stack/t_stack.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Test queue
+$(OBJDIR)/t_queue.o: test/test_queue/t_queue.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # List
 $(OBJDIR)/list.o: src/list/list.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Stack
 $(OBJDIR)/stack.o: src/stack/stack.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Queue
+$(OBJDIR)/queue.o: src/queue/queue.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create the binary directory
