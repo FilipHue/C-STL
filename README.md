@@ -89,7 +89,7 @@ Arrays can be declared in two main ways: **statically** or **dynamically**.
 At a closer look, you'll notice that in dealing with arrays, we are inherently working with pointers. The array identifier serves as a pointer, directing us to the initial memory location where the data is stored.
 
 ### An interesting case: Matrices in C
-To have a better understanding of arrays, lets look at the matrix.
+To have a better understanding of arrays and pointers, lets look at the matrix.
 
 In C, a matrix can be thought of as an array of arrays, or more specifically, a pointer to an array of pointers.
 
