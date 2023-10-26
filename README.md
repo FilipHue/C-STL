@@ -43,7 +43,7 @@ So there you have it! I've tried to keep things clear and easy to navigate, just
 ## Summary of Topics
 Now, with this out of the way, you can choose what topic you want to learn about.
 
- - [Understanding Pointers in C](#understanding-pointers-in-c)
+ - Understanding Pointers in C
 	 - [Arrays](#arrays)
 	 - [Single Linked List](#single-linked-list)
  - Data Structures Explained:
