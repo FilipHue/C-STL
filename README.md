@@ -112,9 +112,93 @@ Let's break that down:
 	}
 	```
 
+
+Whether you choose to declare them statically or dynamically, accessing the data inside an array is straightforward: you can use either index notation or pointer arithmetic. However, when it comes to adding an element, let's say insert it in the middle of the array, things get a bit more complex.
+
+For both static and dynamic arrays, resizing is often necessary. With dynamic arrays, functions such as `malloc`, `calloc`, and `realloc` come in handy for allocating new memory blocks and resizing. However, in both cases, you would still need to create a new memory location and copy the data from the old array to the new one. Afterward, shifting the elements is required to make space for inserting the new data.
+
+A notable concern also lies in memory utilization. Static arrays might occupy unnecessary space, whereas dynamic allocation can hit a snag if `realloc` fails to find a suitable memory block, resulting in a NULL return.
+
+This is where alternative data structures, like the Single Linked List, become beneficial. These structures offer more flexibility for insertions and deletions, providing a more efficient solution for these operations.
+
+### Single Linked List
+
+We've previously discussed how an array represents a contiguous block of memory used to store data elements. In contrast, a linked list operates quite differently. Its elements, referred to as nodes, are dispersed throughout the memory, with each node pointing to the next one in the sequence. This connection is established through pointers. Here's a closer look at the structure of a node:
+
+```C
+struct node {
+	int data;
+	struct node *next;
+};
+```
+
+As we can see, a node is defined as a structure comprising two parts: the `data` field, which holds the value of the node, and the `next` field, which is a pointer to another node. By having the `next` pointer hold the address of the following node, we create a chain of nodes, effectively forming a linked list.
+
+The linked list is commonly represented by a structure that encompasses essential information about the list. This structure will always include a pointer, typically named `head`, which points directly to the first node in the list. To enhance the list's functionality and provide quick access to various elements, additional attributes can be included. For instance, the `tail` pointer can be added to directly reference the list's last node, and a `size` attribute can be incorporated to keep track of the number of nodes in the list. A representation of this linked list structure might appear as follows:
+
+```C
+strucure linked_list {
+	struct node *head;
+	struct node *tail;
+	
+	unsigned int size;
+};
+```
+
+This data structure offers a solution to the issues faced with arrays, especially in terms of memory utilization and flexibility for modifications. With dynamic memory allocation employed to create both the list structure and its individual nodes, we gain precise control over the memory we consume.
+
+In instances where we anticipate the need to insert nodes later but do not have any immediate data to store, we can initiate the list structure and set the `head` pointer to NULL. This action signifies that the list is currently empty. Unlike arrays, adding a node to a linked list does not necessitate resizing of the entire structure. Instead, we simply establish connections between nodes using pointers. The same principle holds true for deletion operations.
+
+However, it's important to note a trade-off in terms of element accessibility. Unlike arrays, where index notation provides rapid direct access to any element (due to the contiguous memory layout), linked lists require traversal from the head of the list through each preceding node to reach a specific element (since the nodes are scattered). This characteristic can lead to increased time complexity for certain operations, making linked lists less efficient for scenarios where fast, random access is a priority.
+
+Now, let’s delve into a couple of fundamental and critical operations in linked lists: insertion and deletion.
+
+**Insertion**
+
+Inserting a new node into a linked list is a common operation, and it can take place in various scenarios, such as:
+
+1.  Adding a node at the beginning of the list.
+2.  Append node at the end of the list.
+3.  Inserting a node at a specific position within the list.
+
+For all these scenarios, the initial steps are similar. First, we need to create the new node, populate it with the desired data, and set its `next` pointer to NULL. This precaution ensures that we don’t end up with a dangling pointer, as the exact connection point in the list is not yet determined.
+
+Next, we must ascertain whether the list is currently empty. If it is, the process is straightforward: we simply set the list’s head pointer to our new node.
+
+If the list is not empty and we are in the first scenario, inserting at the beginning, we update the new node’s `next` pointer to point to the current head of the list. Subsequently, we update the head of the list to be our new node. This operation is commonly referred to as “prepend.”
+
+In the second scenario, adding a node to the end of the list, the process depends on whether we have a tail pointer. If we do, we can directly connect the tail’s next pointer to the new node and then update the tail pointer to our new node, much like the “append” operation. If a tail pointer is not available, we must traverse the entire list to find the last node and update its `next` pointer to our new node.
+
+The third scenario, inserting at a specific position, is a bit trickier since single linked lists are inherently one-directional, and we can’t traverse backwards. To handle this, we iterate through the list until we reach the node just before our desired insertion point. At this juncture, we engage in a bit of pointer manipulation: we set the `next` pointer of our new node to point to the current node’s next node. Then, we update the current node’s next pointer to our new node. This operation, also known as “insert,” effectively places our new node at the specified position in the list[^1].
+
+[^1]: For a much better understanding, I recommend taking a look at [this](https://visualgo.net/en/list).
+
+
+**Deletion**
+
+Deletion in a linked list involves the removal of a specific node and this task can be performed under various circumstances:
+
+1.  Removing from the beginning of the list.
+2.  Eliminating from the end of the list.
+3.  Excising a node positioned at a specific location in the list.
+
+In every scenario mentioned above, the initial step is to ascertain whether the list is empty. If that turns out to be the case, we promptly return from the function as there is nothing to remove.
+
+If the list is not empty and we find ourselves in the first situation, the resolution is relatively simple – we shift the head pointer to the next node in the list, thereby effectively removing the first node.
+
+In the second situation, where we aim to delete from the end, we traverse the entire list until reaching the penultimate node. Subsequently, we update the next pointer of this node to NULL, effectively excising the last node from the list. If our linked list structure includes a tail pointer, we ensure to update that as well.
+
+The third situation calls for a more meticulous approach. We traverse the list to locate the node just before the one we wish to delete. After finding this node, we adjust its next pointer to bypass the node slated for deletion, thus removing it from the list.
+
+A crucial aspect to highlight here is the importance of memory management: **ENSURE YOU RELEASE THE MEMORY OCCUPIED BY THE DELETED NODE**. Once the node is disconnected from the list, accessing it becomes impossible unless you’ve saved its address elsewhere (which is unlikely). A practical approach might be to return the address of the deleted node, offering the user the option to utilize the data within if needed, or handle the memory deallocation themselves.
+
+
+Absolutely, the world of linked lists is vast, and there are plenty of additional features and functions you could tack on to really power up this data structure. However, I'm going to put a pin in that conversation for now, because our next topic is all about exploring those possibilities in depth. I really hope this little intro has set the stage for you, giving you a solid grasp of the basics to confidently jump into the project’s code.
+
+Alright, buckle up – our coding journey is just getting started! 🚀
+		
 ## Double Linked List (DLL)
 
 ## Stack
 
 ## Queue
-
